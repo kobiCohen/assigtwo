@@ -1,3 +1,11 @@
+//Adding signals 
+#define SIG_DFL 0 
+#define SIG_IGN 1
+#define SIG_KILL 9
+#define SIG_STOP 17
+#define SIG_CONT 19
+
+
 // Segments in proc->gdt.
 #define NSEGS     7
 
@@ -66,6 +74,10 @@ struct proc {
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
+  uint pending_signals;         // pending signals for processs
+  uint singlas_mask;
+  void signal_handlers[32];
+  struct trapframe usr_trp_frm_bup;
 };
 
 // Process memory is laid out contiguously, low addresses first:
